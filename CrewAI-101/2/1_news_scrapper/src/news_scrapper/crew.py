@@ -54,16 +54,27 @@ class NewsScrapper():
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def research_task(self) -> Task:
+    def retrieve_news_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'],
+            config=self.tasks_config['retrieve_news_task'],
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def website_scrape_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'],
-            output_file='report.md'
+            config=self.tasks_config['website_scrape_task'],
+        )
+
+    @task
+    def ai_news_write_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['ai_news_write_task'],
+        )
+
+    @task
+    def file_write_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['file_write_task'],
         )
 
     @crew

@@ -6,7 +6,6 @@ sys.path.append('.')
 from src.news_scrapper.crew import NewsScrapper
 from datetime import datetime
 
-
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 # This main file is intended to be a way for you to run your
@@ -20,7 +19,7 @@ def run():
     """
     inputs = {
         'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        "date": datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
     }
 
     inputs_array = [

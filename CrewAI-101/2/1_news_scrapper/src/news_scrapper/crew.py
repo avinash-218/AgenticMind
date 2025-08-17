@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import SerperDevTool, ScrapeWebsiteTool, FileWriterTool
 from dotenv import load_dotenv
 load_dotenv()
 # If you want to run a snippet of code before or after the crew starts,
@@ -19,16 +20,33 @@ class NewsScrapper():
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def researcher(self) -> Agent:
+    def retrieve_news(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'],
+            config=self.agents_config['retrieve_news'],
+            tools = [SerperDevTool()],   # search internet with serper
             verbose=True
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def website_scraper(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'],
+            config=self.agents_config['website_scraper'],
+            tools=[ScrapeWebsiteTool()],
+            verbose=True
+        )
+    
+    @agent
+    def ai_news_writer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['ai_news_writer'],
+            verbose=True
+        )
+    
+    @agent
+    def file_writer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['file_writer'],
+            tools = [FileWriterTool()],
             verbose=True
         )
 

@@ -26,5 +26,9 @@ file_write_task:
   description: >
     Write the news article to a file
   expected_output: >
-    A fully fledge news article with all information from previous task into a file named ./{date}_news_article.md
+    A fully fledge news article with all information from previous task into a file named ./Articles/{date}_{topic}.md
   agent: file_writer
+  input:
+    filename: "./Articles/{date}_{topic}.md"
+    overwrite: "true"
+    content: "{ai_news_write_task.output}"

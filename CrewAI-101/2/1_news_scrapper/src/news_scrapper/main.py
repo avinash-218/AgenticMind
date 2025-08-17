@@ -19,24 +19,25 @@ def run():
     """
     inputs = {
         'topic': 'AI LLMs',
-        "date": datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+        "date": datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     }
 
     inputs_array = [
         {
             "topic": "AI Agents",
-            "date": datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+            "date": datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         },
         {
             "topic": "Model Context Protocol",
-            "date": datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+            "date": datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         },
         {
             "topic": "Agent to Agent Communication",
-            "date": datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+            "date": datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         }
     ]
     
-    NewsScrapper().crew().kickoff(inputs=inputs)
+    # NewsScrapper().crew().kickoff(inputs=inputs)
+    NewsScrapper().crew().kickoff_for_each(inputs=inputs_array)
 
 run()

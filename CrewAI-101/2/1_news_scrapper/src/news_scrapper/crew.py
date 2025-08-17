@@ -1,4 +1,4 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool, ScrapeWebsiteTool, FileWriterTool
 from dotenv import load_dotenv
@@ -16,6 +16,10 @@ class NewsScrapper():
     # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
+    llm = LLM(
+        model='ollama/llama3-groq-tool-use:latest',
+        base_url='http://localhost:11434'
+    )
 
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
@@ -24,6 +28,7 @@ class NewsScrapper():
         return Agent(
             config=self.agents_config['retrieve_news'],
             tools = [SerperDevTool()],   # search internet with serper
+            llm = self.llm,
             verbose=True
         )
 
@@ -32,6 +37,7 @@ class NewsScrapper():
         return Agent(
             config=self.agents_config['website_scraper'],
             tools=[ScrapeWebsiteTool()],
+            llm = self.llm,
             verbose=True
         )
     
@@ -39,6 +45,7 @@ class NewsScrapper():
     def ai_news_writer(self) -> Agent:
         return Agent(
             config=self.agents_config['ai_news_writer'],
+            llm = self.llm,
             verbose=True
         )
     
@@ -47,6 +54,7 @@ class NewsScrapper():
         return Agent(
             config=self.agents_config['file_writer'],
             tools = [FileWriterTool()],
+            llm = self.llm,
             verbose=True
         )
 

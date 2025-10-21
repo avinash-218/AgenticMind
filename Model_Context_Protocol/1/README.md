@@ -6,3 +6,12 @@
 
 #### Transport
 - STDIO
+
+#### Command
+- python
+
+#### Arguments
+- ./server/weather.py
+
+#### Install in Claude
+- mcp install ./server/weather.py

@@ -58,4 +58,4 @@ async def get_alerts(state):
     return "\n---\n".join(alerts)
 
 if __name__ == "__main__":
-    print(asyncio.run(get_alerts('CA')))
+    mcp.run(transport="stdio")

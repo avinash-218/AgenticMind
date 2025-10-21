@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "flight_assistant": {
+            "command": "python",
+            "args": [
+                "./flight.py"
+            ]
+        }
+    }
+}

@@ -1,0 +1,6 @@
+streamlit
+pymupdf==1.25.0
+python-dotenv
+apify-client
+langchain-groq
+mcp[cli]

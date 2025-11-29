@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "terminal_server": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\4\\terminal_server.py"
+            ]
+        }
+    }
+  }
+  

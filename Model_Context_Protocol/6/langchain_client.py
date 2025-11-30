@@ -46,10 +46,9 @@ def initialize_llm() -> ChatGoogleGenerativeAI:
 # ============================================================
 # MCP Server Configuration
 # ============================================================
-def get_server_parameters() -> StdioServerParameters:
+def get_server_parameters(command='python', server_script = "./server.py") -> StdioServerParameters:
     """Return MCP server configuration."""
-    server_script = "./server.py"
-    return StdioServerParameters(command="python", args=[server_script])
+    return StdioServerParameters(command=command, args=[server_script])
 
 # ============================================================
 # Response Parser

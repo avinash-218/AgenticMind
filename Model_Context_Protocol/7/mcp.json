@@ -1,0 +1,17 @@
+{
+    "mcpServers": {
+        "terminal_server": {
+            "command": "docker",
+            "args": [
+              "run",
+              "-i",  // keeps stdin open for mcp terminal interaction 
+              "--rm", // remove container after exit
+              "--init", 
+              "-e", "DOCKER_CONTAINER=true",  // environment variable to signal inside container
+              "-v", "D:/Studies/My Works/Github Repositories/AgenticMind:/app/mcp_terminal",
+              "terminal_server_docker"  // Docker image name
+            ]
+        }
+    }
+  }
+  

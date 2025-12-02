@@ -1,0 +1,23 @@
+{
+    "mcpServers": {
+        "Content_Creation_Server": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\9\\content_creation_server.py"
+            ]
+        },
+        "Hashnode_Server": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\9\\hashnode_server.py"
+            ]
+        },
+        "Markdown_File_Server": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\9\\markdown_file_server.py"
+            ]
+        }
+    }
+  }
+  

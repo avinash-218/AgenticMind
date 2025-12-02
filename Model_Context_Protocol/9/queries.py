@@ -1,139 +1,196 @@
-
-# ---------------------------
-# ✅ GraphQL Queries
-# ---------------------------
-
-TEST_QUERY = """
-query {
-  me {
-    id
-    username
-  }
-}
-"""
-
-GET_PUBLICATION_ID_QUERY = """
-query GetPublications {
-  me {
-    publications(first: 1) {
-      edges {
-        node {
-          id
-          title
-          domain
+ME_QUERY = """
+    query Me {
+      me {
+        id
+        username
+        name
+        bio {
+          text
+        }
+        profilePicture
+        socialMediaLinks {
+          website
+          github
+          twitter
+          linkedin
+        }
+        followersCount
+        followingsCount
+        tagline
+        location
+        dateJoined
+        role
+        publications(first: 5) {
+          edges {
+            node {
+              id
+              title
+              # remove 'domain' because it's not on Publication
+              # if you want url-like info, you may need other fields here
+            }
+          }
+          totalDocuments
+        }
+        techStack(page: 1, pageSize: 20) {
+          nodes {
+            name
+            slug
+          }
+          totalDocuments
         }
       }
     }
-  }
-}
-"""
+    """
 
-CREATE_ARTICLE_MUTATION = """
-mutation CreateDraft($input: CreateDraftInput!) {
-  createDraft(input: $input) {
-    draft {
-      id
-      title
-      slug
+CREATE_DRAFT_QUERY = """
+    mutation CreateDraft($input: CreateDraftInput!) {
+      createDraft(input: $input) {
+        draft {
+          id
+          title
+          slug
+          subtitle
+          readTimeInMinutes
+          dateUpdated
+          updatedAt
+          canonicalUrl
+          isSubmittedForReview
+          publication {
+            id
+            title
+          }
+          author {
+            name
+            username
+          }
+          tags {
+            name
+            slug
+          }
+        }
+      }
     }
-  }
-}
-"""
+    """
 
-PUBLISH_ARTICLE_MUTATION = """
-mutation PublishPost($draftId: ID!) {
-  publishPost(draftId: $draftId) {
-    post {
-      id
-      title
-      slug
-      url
+GET_PUBLICATION_QUERY = """
+    query GetPublication {
+      me {
+        publications(first: 1) {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
     }
-  }
-}
-"""
+    """
 
-UPDATE_ARTICLE_MUTATION = """
+PUBLISH_DRAFT_QUERY = """
+    mutation PublishDraft($input: PublishDraftInput!) {
+      publishDraft(input: $input) {
+        post {
+          id
+          title
+          slug
+          subtitle
+          url
+          canonicalUrl
+          brief
+          readTimeInMinutes
+          publishedAt
+          updatedAt
+          views
+          reactionCount
+          replyCount
+          responseCount
+          featured
+          tags {
+            name
+            slug
+          }
+          publication {
+            id
+            title
+          }
+          author {
+            name
+            username
+          }
+        }
+      }
+    }
+    """
+
+UPDATE_POST_QUERY = """
 mutation UpdatePost($input: UpdatePostInput!) {
   updatePost(input: $input) {
     post {
       id
       title
       slug
+      updatedAt
       url
-    }
-  }
-}
-"""
-
-SEARCH_POSTS_OF_PUBLICATION_QUERY = """
-query SearchPostsOfPublication($first: Int!, $filter: SearchPostsOfPublicationFilter) {
-  searchPostsOfPublication(first: $first, filter: $filter) {
-    edges {
-      node {
-        id
-        title
+      tags {
+        name
         slug
-        brief
-        publishedAt
-        author { name }
+      }
+      publication {
+        title
+      }
+      author {
+        name
+        username
       }
     }
   }
 }
 """
 
-GET_POST_BY_ID_QUERY = """
-query GetPostById($id: ID!) {
-  post(id: $id) {
-    id
+REMOVE_POST_QUERY = """
+mutation RemovePost($input: RemovePostInput!) {
+  removePost(input: $input) {
+    post {
+      id
+      title
+      slug
+      publication {
+        title
+      }
+      author {
+        name
+        username
+      }
+      updatedAt
+      publishedAt
+    }
+  }
+}
+"""
+
+PUBLICATION_QUERY = """
+    query Publication($host: String!) {
+      publication(host: $host) {
+        isTeam
+        title
+        about {
+          markdown
+        }
+      }
+    }
+    """
+
+PUBLICATION_POSTS_QUERY = """
+query Publication($host: String!, $limit: Int!) {
+  publication(host: $host) {
+    isTeam
     title
-    contentMarkdown
-    brief
-    slug
-    url
-    publishedAt
-    author { name }
-  }
-}
-"""
-
-GET_USER_INFO_QUERY = """
-query GetUserInfo($username: String!) {
-  user(username: $username) {
-    id
-    name
-    username
-    tagline
-    publicationDomain
-  }
-}
-"""
-
-GET_TOP_ARTICLES_QUERY = """
-query GetTopArticles {
-  topStoriesFeed {
-    edges {
-      node {
-        id
-        title
-        slug
-        url
-      }
-    }
-  }
-}
-"""
-
-GET_ARTICLES_BY_TAG_QUERY = """
-query GetArticlesByTag($tagSlug: String!) {
-  tag(slug: $tagSlug) {
-    posts(first: 5) {
+    posts(first: $limit) {
       edges {
         node {
-          id
           title
-          slug
+          brief
           url
         }
       }

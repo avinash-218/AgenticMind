@@ -11,7 +11,7 @@ def initialize_llm() -> ChatGoogleGenerativeAI:
     """Initialize Gemini LLM."""
     return ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
-        temperature=0.7,
+        temperature=1.0,
         max_retries=3,
         google_api_key=os.getenv("GOOGLE_API_KEY"),
     )
@@ -24,8 +24,19 @@ async def blog_content_creator(topic: str) -> str:
     llm = initialize_llm()
 
     prompt = ChatPromptTemplate.from_template(
-        "You are an expert educator. Write a clear, engaging explanation about the topic: '{topic}'. "
-        "Include key concepts, examples, and a short summary at the end."
+        (
+            "You are an imaginative, world-class blog writer and educator.\n\n"
+            "Write a compelling blog post about the topic: '{topic}'.\n\n"
+            "Requirements:\n"
+            "- Start with a hook that grabs the reader's attention.\n"
+            "- Use a friendly, conversational tone while staying accurate and informative.\n"
+            "- Explain key concepts clearly, as if teaching an intelligent beginner.\n"
+            "- Include vivid examples, mini-stories, or analogies to make ideas memorable.\n"
+            "- Organize the content into logical sections with clear transitions.\n"
+            "- Where useful, include bullet points or numbered lists instead of long paragraphs.\n"
+            "- End with a short, punchy conclusion that reinforces the main takeaway and offers a practical next step.\n"
+            "- Avoid generic filler; aim for specific, concrete insights and fresh phrasing.\n"
+        )
     )
 
     messages = prompt.format_messages(topic=topic)

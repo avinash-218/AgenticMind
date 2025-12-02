@@ -5,23 +5,17 @@ import os
 import logging
 import traceback
 
-# === MCP imports ===
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-# === LangChain imports ===
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# === Environment and Logging Setup ===
 from dotenv import load_dotenv
 load_dotenv()
 
-# ============================================================
-# Logging Configuration
-# ============================================================
 def configure_logging():
     """Configure global logging."""
     logging.basicConfig(
@@ -37,9 +31,6 @@ def load_mcp_config(config_path = './mcp_config.json'):
     with open(config_path, 'r') as f:
         return json.load(f)
     
-# ============================================================
-# LLM Initialization
-# ============================================================
 def initialize_llm() -> ChatGoogleGenerativeAI:
     """Initialize Gemini LLM."""
     return ChatGoogleGenerativeAI(
@@ -50,9 +41,6 @@ def initialize_llm() -> ChatGoogleGenerativeAI:
     )
 llm = initialize_llm()
 
-# ============================================================
-# Response Parser
-# ============================================================
 def print_message_contents(response):
     """
     Print only the content of HumanMessage, ToolMessage, and AIMessage objects.
@@ -66,9 +54,6 @@ def print_message_contents(response):
         elif isinstance(msg, AIMessage):
             print(f"[AI]: {msg.content}")
 
-# ============================================================
-# Query Processor
-# ============================================================
 async def process_user_query(agent):
     """Handle user input and display filtered message content."""
     while True:
@@ -88,9 +73,6 @@ async def process_user_query(agent):
             logger.error(f"Error processing query: {e}")
             traceback.print_exc()
 
-# ============================================================
-# Agent Runner
-# ============================================================
 async def run_agent():
     """Connect to MCP server, load tools, create an agent, and handle user queries."""
     config = load_mcp_config()
@@ -135,9 +117,6 @@ async def run_agent():
         logger.info("Agent is ready to process requests.")
         await process_user_query(agent)
 
-# ============================================================
-# Main Entrypoint
-# ============================================================
 async def main():
     """Initialize MCP client, connect, and run the agent."""
     await run_agent()

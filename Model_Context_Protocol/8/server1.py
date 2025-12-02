@@ -1,0 +1,29 @@
+import os
+from datetime import datetime
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("server1")
+
+@mcp.tool()
+def save_markdown_file(content: str, filename: str = None) -> str:
+    """
+    Save the given content into a Markdown (.md) file.
+    If no filename is provided, a timestamped one will be generated.
+    """
+    os.makedirs("outputs", exist_ok=True)
+
+    if not filename:
+        filename = f"note_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+
+    filepath = os.path.join("outputs", filename)
+
+    if not filepath.endswith(".md"):
+        filepath += ".md"
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    return f"Markdown file saved at: {filepath}"
+
+if __name__ == "__main__":
+    mcp.run(transport="stdio")

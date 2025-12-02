@@ -1,0 +1,17 @@
+{
+    "mcpServers": {
+        "server1": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\8\\server1.py"
+            ]
+        },
+        "server2": {
+            "command": "C:\\Users\\ravin\\anaconda3\\envs\\agentic_ai\\python.exe",
+            "args": [
+              "D:\\Studies\\My Works\\Github Repositories\\AgenticMind\\Model_Context_Protocol\\8\\server2.py"
+            ]
+        }
+    }
+  }
+  

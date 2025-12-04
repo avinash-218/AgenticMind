@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "terminal_server": {
+      "sse_url": "http://localhost:8000/sse",
+      "messages_url": "http://localhost:8000/messages/"
+    }
+  }
+}

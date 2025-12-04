@@ -11,7 +11,7 @@ from starlette.requests import Request  # HTTP request objects
 
 import uvicorn  #ASGI server to run starlette app
 
-mcp = FastMCP("calculator_server")
+mcp = FastMCP("sse_mcp_server")
 WORKSPACE = os.path.expanduser("~/mcp/workspace")
 
 print(WORKSPACE)

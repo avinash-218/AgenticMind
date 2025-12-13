@@ -149,4 +149,4 @@ if __name__ == "__main__":
     # build starlette app
     starlette_app = create_starlette_app(mcp_server=mcp_server, debug=True)
 
-    uvicorn.run(starlette_app, host=args.host, port=args.port)  # starting a web server using Uvicorn
+    uvicorn.run(starlette_app, host=args.host, port=int(args.port))  # starting a web server using Uvicorn

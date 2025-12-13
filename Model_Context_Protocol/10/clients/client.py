@@ -5,17 +5,14 @@ import os
 import logging
 import traceback
 
-# === MCP imports ===
 from mcp import ClientSession
 from mcp.client.sse import sse_client
 
-# === LangChain imports ===
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# === Environment and Logging Setup ===
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -37,7 +34,7 @@ def load_mcp_config(config_path='./mcp_config.json'):
 def initialize_llm() -> ChatGoogleGenerativeAI:
     """Initialize Gemini LLM."""
     return ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-lite",
         temperature=0,
         max_retries=3,
         google_api_key=os.getenv("GOOGLE_API_KEY"),
@@ -89,11 +86,10 @@ async def run_agent():
 
             # Using SSE client instead of stdio
             sse_url = server_info["sse_url"]  # e.g., http://localhost:8000/sse
-            messages_url = server_info.get("messages_url", sse_url.replace("/sse", "/messages/"))
 
             try:
                 # Establish SSE connection
-                read, write = await stack.enter_async_context(sse_client(sse_url=sse_url, messages_url=messages_url))
+                read, write = await stack.enter_async_context(sse_client(url=sse_url))
 
                 # Create MCP client session
                 session = await stack.enter_async_context(ClientSession(read, write))

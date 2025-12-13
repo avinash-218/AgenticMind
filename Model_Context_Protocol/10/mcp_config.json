@@ -1,8 +1,7 @@
 {
   "mcpServers": {
     "sse_mcp_server": {
-      "sse_url": "http://127.0.0.1:8081/sse",
-      "messages_url": "http://127.0.0.1:8081/messages"
+      "sse_url": "http://127.0.0.1:8081/sse"
     }
   }
 }

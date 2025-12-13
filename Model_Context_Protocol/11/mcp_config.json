@@ -1,0 +1,18 @@
+{
+    "mcpServers": {
+        "server1": {
+            "command": "npx",
+            "args": [
+                "mcp-remote",
+                "http://localhost:3000/mcp/"
+            ]
+        },
+        "server2": {
+            "command": "npx",
+            "args": [
+                "mcp-remote",
+                "http://localhost:3001/mcp/"
+            ]
+        }
+    }
+}

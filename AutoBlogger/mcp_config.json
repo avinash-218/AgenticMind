@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "Content_Creation_Server": {
+            "url": "http://127.0.0.1:8000/sse"
+        },
+        "Hashnode_Server": {
+            "url": "http://127.0.0.1:8001/sse"
+        },
+        "Markdown_File_Server": {
+            "url": "http://127.0.0.1:8002/sse"
+        }
+    }
+}

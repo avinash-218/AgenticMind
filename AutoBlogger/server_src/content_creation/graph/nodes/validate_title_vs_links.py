@@ -1,8 +1,8 @@
 from logging_config import get_logger
 
 logger = get_logger("ContentCreationServer")
-from content_creation.graph.state import ContentState
-from content_creation.graph.chains.relevancy_grader_chain import relevance_grader
+from server_src.content_creation.graph.state import ContentState
+from server_src.content_creation.graph.chains.relevancy_grader_chain import relevance_grader
 
 def validate_title_vs_links(state: ContentState):
     logger.info('--- Validate Title vs LINKS ---')
@@ -19,7 +19,7 @@ def validate_title_vs_links(state: ContentState):
         }
     )
 
-    logger.info("Relevance decision:", decision)
+    logger.info(f"Relevance decision: {decision}")
 
     if not decision.relevant:
         return {

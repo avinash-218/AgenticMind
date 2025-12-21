@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from logging_config import get_logger
 
 logger = get_logger("HashnodeServer")
@@ -7,7 +10,7 @@ import os
 import httpx
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
-from queries import (
+from server_src.hashnode_graphql_queries import (
     ME_QUERY,
     CREATE_DRAFT_QUERY,
     GET_PUBLICATION_QUERY,

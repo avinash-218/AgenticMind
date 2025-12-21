@@ -1,9 +1,12 @@
-from logging_config import get_logger
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
+from logging_config import get_logger
 logger = get_logger("ContentCreatorServer")
 logger.info("ContentCreatorServer started")
 
-from content_creation.graph.graph import content_graph
+from server_src.content_creation.graph.graph import content_graph
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
 load_dotenv()

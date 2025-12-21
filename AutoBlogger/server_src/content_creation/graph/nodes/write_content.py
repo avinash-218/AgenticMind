@@ -1,8 +1,8 @@
 from logging_config import get_logger
 
 logger = get_logger("ContentCreationServer")
-from content_creation.graph.state import ContentState
-from content_creation.graph.chains.content_writer_chain import content_writer
+from server_src.content_creation.graph.state import ContentState
+from server_src.content_creation.graph.chains.content_writer_chain import content_writer
 
 def write_content(state: ContentState):
     logger.info('--- WRITE CONTENT ---')

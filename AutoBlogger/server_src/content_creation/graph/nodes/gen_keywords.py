@@ -1,8 +1,8 @@
 from logging_config import get_logger
 
 logger = get_logger("ContentCreationServer")
-from content_creation.graph.state import ContentState
-from content_creation.graph.chains.keyword_generator_chain import keyword_generator
+from server_src.content_creation.graph.state import ContentState
+from server_src.content_creation.graph.chains.keyword_generator_chain import keyword_generator
 
 def generate_keywords(state: ContentState):
     logger.info("\n--- Generate Keywords ---")
@@ -44,7 +44,7 @@ def generate_keywords(state: ContentState):
             keywords.append(k)
             seen.add(k.lower())
 
-    logger.info("Generated keywords:", keywords)
+    logger.info(f"Generated keywords: {keywords}")
 
     return {
         "search_keywords": keywords

@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 load_dotenv()
 from langgraph.graph import START, END, StateGraph
-from content_creation.graph.state import ContentState
-from content_creation.graph.nodes import *
+from server_src.content_creation.graph.state import ContentState
+from server_src.content_creation.graph.nodes import *
 
 graph = StateGraph(ContentState)
 

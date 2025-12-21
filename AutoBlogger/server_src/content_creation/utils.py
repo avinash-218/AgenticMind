@@ -89,4 +89,3 @@ def draw_stylish_graph(langgraph, output_name="content_graph"):
 
     dot.render(output_name, cleanup=True)
     return dot
-

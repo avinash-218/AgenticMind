@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from logging_config import get_logger
 
 logger = get_logger("MCPClient")
@@ -19,7 +22,7 @@ from langchain_groq.chat_models import ChatGroq
 from dotenv import load_dotenv
 load_dotenv()
 
-def load_mcp_config(config_path = './mcp_config.json'):
+def load_mcp_config(config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../mcp_config.json"))):
     with open(config_path, 'r') as f:
         return json.load(f)
     
@@ -119,6 +122,7 @@ async def main():
     await run_agent()
 
 if __name__ == "__main__":
+    os.makedirs('markdowns', exist_ok=True)
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

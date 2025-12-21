@@ -1,9 +1,13 @@
 from logging_config import get_logger
 
 logger = get_logger("ContentCreationServer")
+
+import warnings
+warnings.filterwarnings("ignore", message="Field name .* shadows an attribute in parent .*BaseTool.*")
+
 from langchain_tavily import TavilySearch
 from typing import Dict
-from content_creation.graph.state import ContentState
+from server_src.content_creation.graph.state import ContentState
 
 web_search_tool = TavilySearch(
     max_results=1,

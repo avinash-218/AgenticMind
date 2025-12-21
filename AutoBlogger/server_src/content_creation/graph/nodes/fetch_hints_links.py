@@ -3,7 +3,7 @@ from logging_config import get_logger
 logger = get_logger("ContentCreationServer")
 import os
 import re
-from content_creation.graph.state import ContentState
+from server_src.content_creation.graph.state import ContentState
 
 def fetch_hints_links(state: ContentState):
     INPUT_FILE=os.path.join(os.curdir, os.getenv("INPUT_FILE"))

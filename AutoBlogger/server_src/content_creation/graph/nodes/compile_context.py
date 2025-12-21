@@ -1,7 +1,7 @@
 from logging_config import get_logger
 
 logger = get_logger("ContentCreationServer")
-from content_creation.graph.state import ContentState
+from server_src.content_creation.graph.state import ContentState
 
 def compile_context(state: ContentState):
     logger.info('--- COMPILE CONTEXT ---')

@@ -74,7 +74,13 @@ class ContentState(BaseModel):
         )
     )
 
-    images: Optional[List[Dict[str, str]]] = None
+    images: Optional[List[Dict[str, str]]] = Field(
+        None,
+        description=(
+            "Images provided by the user and/or discovered. "
+            "Each image must contain at least a `url` key."
+        )
+    )
 
     compiled_context: Optional[str] = Field(
         None,

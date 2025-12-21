@@ -58,12 +58,13 @@ def web_search(state: ContentState) -> Dict:
                 img_url = img.get("url")
                 img_desc = img.get("description")
 
-                if img_url and img_desc:
+                if img_url:
                     images.append(
                         {
                             "url": img_url,
-                            "description": img_desc.strip(),
-                            "query": keyword
+                            "description": img_desc.strip() if img_desc else 'No Description',
+                            "query": keyword,
+                            "source": "tavily"
                         }
                     )
 
@@ -82,13 +83,17 @@ def web_search(state: ContentState) -> Dict:
         result["tavily_results"] = "\n\n---\n\n".join(aggregated_results)
 
     if images:
-        # remove duplicate images
+        all_images = (state.images or []) + images
+
         seen = set()
         unique_images = []
-        for img in images:
-            if img["url"] not in seen:
+        for img in all_images:
+            url = img.get("url")
+            if not url:
+                continue
+            if url not in seen:
                 unique_images.append(img)
-                seen.add(img["url"])
+                seen.add(url)
 
         result["images"] = unique_images
 

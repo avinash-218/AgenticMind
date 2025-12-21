@@ -1,4 +1,6 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("ContentCreationServer")
 from content_creation.graph.state import ContentState
 
 def compile_context(state: ContentState):

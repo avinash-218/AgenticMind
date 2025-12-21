@@ -1,4 +1,8 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("MarkdownFileServer")
+logger.info("MarkdownFileServer started")
+
 import os
 from datetime import datetime
 from mcp.server.fastmcp import FastMCP

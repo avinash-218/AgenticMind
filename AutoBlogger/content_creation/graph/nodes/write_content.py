@@ -1,4 +1,6 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("ContentCreationServer")
 from content_creation.graph.state import ContentState
 from content_creation.graph.chains.content_writer_chain import content_writer
 

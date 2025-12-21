@@ -1,10 +1,12 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("ContentCreationServer")
 import os
 import re
 from content_creation.graph.state import ContentState
 
 def fetch_hints_links(state: ContentState):
-    INPUT_FILE=os.getenv("INPUT_FILE")
+    INPUT_FILE=os.path.join(os.curdir, os.getenv("INPUT_FILE"))
     logger.info('---FETCH HINTS AND LINKS---')
     URL_REGEX = re.compile(r"https?://\S+")
     

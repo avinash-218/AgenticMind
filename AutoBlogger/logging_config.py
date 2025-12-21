@@ -4,10 +4,10 @@ from pathlib import Path
 
 _LOGGER_INITIALIZED = False
 
-def get_logger(name: str = "auto_blogger") -> logging.Logger:
+def get_logger(name: str) -> logging.Logger:
     """
-    Returns a logger configured with console + file handlers.
-    Safe to call multiple times across modules.
+    Returns a named logger.
+    Logging is initialized ONLY ONCE with a single file + console output.
     """
     global _LOGGER_INITIALIZED
 
@@ -19,8 +19,7 @@ def get_logger(name: str = "auto_blogger") -> logging.Logger:
         log_file = log_dir / f"{name}_{timestamp}.log"
 
         formatter = logging.Formatter(
-            fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
+            "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
         )
 
         root_logger = logging.getLogger()
@@ -37,9 +36,7 @@ def get_logger(name: str = "auto_blogger") -> logging.Logger:
         root_logger.addHandler(console_handler)
         root_logger.addHandler(file_handler)
 
-        root_logger.info(f"Logging initialized. Log file: {log_file}")
+        root_logger.info(f"Logging initialized → {log_file}")
         _LOGGER_INITIALIZED = True
 
     return logging.getLogger(name)
-
-logger = get_logger()

@@ -1,4 +1,8 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("MCPClient")
+logger.info("Client started")
+
 import asyncio
 from contextlib import AsyncExitStack
 import json

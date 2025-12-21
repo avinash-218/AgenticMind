@@ -1,4 +1,8 @@
-from logging_config import logger
+from logging_config import get_logger
+
+logger = get_logger("ContentCreatorServer")
+logger.info("ContentCreatorServer started")
+
 from content_creation.graph.graph import content_graph
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv

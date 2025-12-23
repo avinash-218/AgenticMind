@@ -11,8 +11,9 @@ def write_content(state: ContentState):
     images_block = ""
     if state.images:
         images_block = "\n".join(
-            f"- URL: {img['url']}\n  Description: {img['description']}"
-            for img in state.images[:5]  # hard cap for safety
+            f"- URL: {img.get('url', 'N/A')}\n"
+            f"  Description: {img.get('description', 'No description available')}"
+            for img in state.images
         )
     logger.info('Invoking content writer model...')
     result = content_writer.invoke(

@@ -1,0 +1,6 @@
+.env
+.png
+__pycache__
+.chroma
+logs
+markdowns/

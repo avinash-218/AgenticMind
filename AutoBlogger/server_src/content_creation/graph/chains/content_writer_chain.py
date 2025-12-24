@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_groq.chat_models import ChatGroq
+from server_src.content_creation.utils import initialize_llm
 
 class BlogContent(BaseModel):
     """
@@ -16,24 +16,6 @@ class BlogContent(BaseModel):
         )
     )
 
-def initialize_llm():
-    """
-    Initialize and return the Groq-backed chat language model.
-
-    The model is configured with deterministic output (temperature = 0)
-    to ensure consistent, repeatable blog generation.
-
-    Returns:
-        ChatGroq: Initialized language model instance.
-    """
-
-    llm = ChatGroq(
-        model="openai/gpt-oss-120b",
-        temperature=0
-    )
-
-    return llm
-
 # LLM initialization and structured output binding
 llm = initialize_llm()
 
@@ -42,8 +24,6 @@ structured_llm = llm.bind_tools([])
 
 # Enforce structured output to match BlogContent schema
 structured_llm = structured_llm.with_structured_output(BlogContent)
-
-
 
 # System prompt defining writing style, structure, and constraints
 SYSTEM_CONTENT_PROMPT = """

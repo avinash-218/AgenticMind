@@ -22,11 +22,12 @@ from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
+from configs.configs import ConfigLoader
 from langchain_groq.chat_models import ChatGroq
+from langchain_ollama.chat_models import ChatOllama
 
 from dotenv import load_dotenv
 load_dotenv()
-
 
 def load_mcp_config(config_path: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../mcp_config.json"))):
     """
@@ -47,19 +48,31 @@ def load_mcp_config(config_path: str = os.path.abspath(os.path.join(os.path.dirn
     
 def initialize_llm():
     """
-    Initialize and return the LLM used by the agent.
+    Initialize and return the chat language model.
 
-    Returns
-    -------
-    ChatGroq
-        Configured Groq chat model instance.
+    The model is configured with deterministic output (temperature = 0)
+    to ensure consistent, repeatable blog generation.
+
+    Returns:
+        Chat Model: Initialized language model instance.
     """
-    llm = ChatGroq(
-        model="openai/gpt-oss-120b",
-        temperature=0
-    )
-    return llm
+    config_data = ConfigLoader()    # load config yaml file
 
+    # create llm instance as per configuration
+    if config_data['LLM_PROVIDER'] == 'groq':
+        llm = ChatGroq(
+            model=config_data['LLM_NAME'],
+            temperature=0
+        )
+    elif config_data['LLM_PROVIDER'] == 'ollama':
+        llm = ChatOllama(
+            model=config_data['LLM_NAME'],
+            temperature=0
+        )
+    else:
+        raise ValueError(f"Unsupported LLM provider: {config_data['LLM_PROVIDER']} and / or name: {config_data['LLM_NAME']}")
+
+    return llm
 
 # Instantiate the LLM once for reuse
 llm = initialize_llm()

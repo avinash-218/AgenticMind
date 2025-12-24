@@ -3,6 +3,7 @@ import os
 from logging_config import get_logger
 logger = get_logger("ContentCreationServer")
 from server_src.content_creation.graph.state import ContentState
+from server_src.content_creation.configs.configs import ConfigLoader
 
 def fetch_hints_links(state: ContentState):
     """
@@ -28,14 +29,17 @@ def fetch_hints_links(state: ContentState):
     """
     logger.info("--- FETCH HINTS, LINKS, AND IMAGES ---")
 
-    # Resolve input file path from environment variable
-    input_file_env = os.getenv("INPUT_FILE")
-    INPUT_FILE = os.path.join(os.curdir, input_file_env) if input_file_env else None
+    # Resolve input file path from config
+    config_data = ConfigLoader()    # load config yaml file
+    input_file_path = config_data['INPUT_FILE_PATH']
+    INPUT_FILE = os.path.join(os.curdir, input_file_path) if input_file_path else None
 
     # Guard: input file path not configured
     if not INPUT_FILE:
-        logger.error("INPUT_FILE environment variable is not set")
-        return {"exit_reason": "INPUT_FILE environment variable is not set"}
+        logger.error("Input file path is invalid")
+        return {"exit_reason": "Input file path is invalid"}
+
+    logger.info(f"Input file path: {INPUT_FILE}")
 
     # Guard: input file does not exist
     if not os.path.exists(INPUT_FILE):

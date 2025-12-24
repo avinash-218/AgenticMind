@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from langchain_groq.chat_models import ChatGroq
+from server_src.content_creation.utils import initialize_llm
 from langchain_core.prompts import ChatPromptTemplate
 
 class RelevanceGrade(BaseModel):
@@ -22,10 +22,8 @@ class RelevanceGrade(BaseModel):
         )
     )
 
-llm = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0
-)
+# LLM initialization and structured output binding
+llm = initialize_llm()
 
 # Bind an empty tools list to explicitly disable tool usage
 structured_llm = llm.bind_tools([])

@@ -1,4 +1,7 @@
 from graphviz import Digraph
+from langchain_groq.chat_models import ChatGroq
+from langchain_ollama.chat_models import ChatOllama
+from server_src.content_creation.configs.configs import ConfigLoader
 
 def draw_stylish_graph(langgraph, output_name="content_graph"):
     """
@@ -116,3 +119,31 @@ def draw_stylish_graph(langgraph, output_name="content_graph"):
     dot.render(output_name, cleanup=True)
 
     return dot
+
+def initialize_llm():
+    """
+    Initialize and return the chat language model.
+
+    The model is configured with deterministic output (temperature = 0)
+    to ensure consistent, repeatable blog generation.
+
+    Returns:
+        Chat Model: Initialized language model instance.
+    """
+    config_data = ConfigLoader()    # load config yaml file
+
+    # create llm instance as per configuration
+    if config_data['LLM_PROVIDER'] == 'groq':
+        llm = ChatGroq(
+            model=config_data['LLM_NAME'],
+            temperature=0
+        )
+    elif config_data['LLM_PROVIDER'] == 'ollama':
+        llm = ChatOllama(
+            model=config_data['LLM_NAME'],
+            temperature=0
+        )
+    else:
+        raise ValueError(f"Unsupported LLM provider: {config_data['LLM_PROVIDER']} and / or name: {config_data['LLM_NAME']}")
+
+    return llm

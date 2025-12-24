@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List
-from langchain_groq.chat_models import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
+from server_src.content_creation.utils import initialize_llm
 
 class KeywordList(BaseModel):
     """
@@ -14,11 +14,8 @@ class KeywordList(BaseModel):
         description="A concise, relevance-ordered list of search keywords or phrases."
     )
 
-# Initialize the language model
-llm = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0
-)
+# LLM initialization and structured output binding
+llm = initialize_llm()
 
 # Bind an empty tools list to explicitly disable tool usage
 structured_llm = llm.bind_tools([])

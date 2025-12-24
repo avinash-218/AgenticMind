@@ -1,0 +1,2 @@
+LLM_PROVIDER : 'groq'   # groq, ollama
+LLM_NAME : 'openai/gpt-oss-120b'   # openai/gpt-oss-120b, llama3-groq-tool-use:latest

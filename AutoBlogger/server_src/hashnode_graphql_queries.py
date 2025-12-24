@@ -1,3 +1,5 @@
+# Fetches the authenticated user's profile details, social links, tech stack,
+# and a limited set of their publications
 ME_QUERY = """
     query Me {
       me {
@@ -42,6 +44,7 @@ ME_QUERY = """
     }
     """
 
+# Creates a new draft post under the authenticated user or a publication
 CREATE_DRAFT_QUERY = """
     mutation CreateDraft($input: CreateDraftInput!) {
       createDraft(input: $input) {
@@ -72,6 +75,7 @@ CREATE_DRAFT_QUERY = """
     }
     """
 
+# Retrieves the first publication associated with the authenticated user
 GET_PUBLICATION_QUERY = """
     query GetPublication {
       me {
@@ -87,6 +91,7 @@ GET_PUBLICATION_QUERY = """
     }
     """
 
+# Publishes an existing draft and returns full post metadata after publishing
 PUBLISH_DRAFT_QUERY = """
     mutation PublishDraft($input: PublishDraftInput!) {
       publishDraft(input: $input) {
@@ -123,6 +128,7 @@ PUBLISH_DRAFT_QUERY = """
     }
     """
 
+# Updates an existing published post or draft with new content or metadata
 UPDATE_POST_QUERY = """
 mutation UpdatePost($input: UpdatePostInput!) {
   updatePost(input: $input) {
@@ -148,6 +154,7 @@ mutation UpdatePost($input: UpdatePostInput!) {
 }
 """
 
+# Removes (unpublishes/deletes) a post and returns basic post information
 REMOVE_POST_QUERY = """
 mutation RemovePost($input: RemovePostInput!) {
   removePost(input: $input) {
@@ -169,6 +176,7 @@ mutation RemovePost($input: RemovePostInput!) {
 }
 """
 
+# Fetches basic publication details using the publication host
 PUBLICATION_QUERY = """
     query Publication($host: String!) {
       publication(host: $host) {
@@ -181,6 +189,7 @@ PUBLICATION_QUERY = """
     }
     """
 
+# Retrieves a limited list of posts from a publication using the publication host
 PUBLICATION_POSTS_QUERY = """
 query Publication($host: String!, $limit: Int!) {
   publication(host: $host) {

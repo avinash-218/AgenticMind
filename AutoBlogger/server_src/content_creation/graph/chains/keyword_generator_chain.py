@@ -1,22 +1,29 @@
 from pydantic import BaseModel, Field
 from typing import List
-from langchain_groq.chat_models import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
+from server_src.content_creation.utils import initialize_llm
 
 class KeywordList(BaseModel):
+    """
+    Structured output schema for keyword generation.
+
+    This model enforces that the LLM returns a concise, ordered list of
+    high-signal search keywords suitable for web research.
+    """
     keywords: List[str] = Field(
-        description="A concise list of search keywords or phrases."
+        description="A concise, relevance-ordered list of search keywords or phrases."
     )
 
-llm = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0
-)
+# LLM initialization and structured output binding
+llm = initialize_llm()
 
-# structured_llm = llm.with_structured_output(KeywordList)
+# Bind an empty tools list to explicitly disable tool usage
 structured_llm = llm.bind_tools([])
+
+# Enforce structured output to match KeywordList schema
 structured_llm = structured_llm.with_structured_output(KeywordList)
 
+# System prompt defining keyword generation behavior
 SYSTEM_KEYWORD_PROMPT = """
 You are a search keyword generator.
 
@@ -33,9 +40,13 @@ RULES:
 - Order the keywords by relevance (the most relevant first).
 """
 
+# Prompt template combining system rules with runtime inputs
 keyword_prompt = ChatPromptTemplate.from_messages(
     [
+        # System-level instructions
         ("system", SYSTEM_KEYWORD_PROMPT),
+
+        # Human message carrying runtime inputs
         (
             "human",
             "TITLE:\n{title}\n\nCONTEXT:\n{context}"
@@ -43,5 +54,5 @@ keyword_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+# Final keyword generation chain
 keyword_generator = keyword_prompt | structured_llm
-

@@ -1,35 +1,31 @@
 from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
-# from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq.chat_models import ChatGroq
-import os
+from server_src.content_creation.utils import initialize_llm
 
 class BlogContent(BaseModel):
+    """
+    Structured output schema for blog generation.
+
+    This model enforces that the LLM returns a single, complete blog post
+    as Markdown-formatted text, ensuring predictable downstream handling.
+    """
     content: str = Field(
-        description="A complete, well-structured blog post based on the given title and context."
+        description=(
+            "A complete, well-structured blog post written in Markdown, "
+            "based on the provided title, context, and images."
+        )
     )
 
-def initialize_llm():
-    # llm = ChatGoogleGenerativeAI(
-    #     model="gemini-2.5-flash",
-    #     temperature=1.0,
-    #     max_retries=3,
-    #     google_api_key=os.getenv("GOOGLE_API_KEY"),
-    # )
-
-    llm = ChatGroq(
-        model="openai/gpt-oss-120b",
-        temperature=0
-    )
-
-    return llm
-
+# LLM initialization and structured output binding
 llm = initialize_llm()
-# structured_llm = llm.with_structured_output(BlogContent)
+
+# Bind empty tools list (explicitly disables tool usage)
 structured_llm = llm.bind_tools([])
+
+# Enforce structured output to match BlogContent schema
 structured_llm = structured_llm.with_structured_output(BlogContent)
 
-
+# System prompt defining writing style, structure, and constraints
 SYSTEM_CONTENT_PROMPT = """
 You are an imaginative, world-class blog writer and educator.
 
@@ -77,9 +73,14 @@ IMPORTANT CONSTRAINTS:
 - Do NOT mention that context or images were provided.
 """
 
+
+# Prompt template combining system instructions and runtime inputs
 content_prompt = ChatPromptTemplate.from_messages(
     [
+        # System-level instructions defining behavior and constraints
         ("system", SYSTEM_CONTENT_PROMPT),
+
+        # Human message carrying runtime inputs
         (
             "human",
             "TITLE:\n{title}\n\n"
@@ -89,4 +90,6 @@ content_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+# Final content writer chain
+# Combines prompt template with structured LLM
 content_writer = content_prompt | structured_llm
